@@ -1,0 +1,144 @@
+﻿<Window x:Name="AddWindow1" x:Class="Biblioteka.AddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Biblioteka"
+        mc:Ignorable="d"
+        Title="Добавить..." Height="760" Width="900" Icon="Card.bmp" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Closing="AddWindow1_Closing">
+    <Grid Background="#FFEAEAEA">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="AuthorsList" Margin="5,0" SelectionChanged="AuthorsList_SelectionChanged" Grid.Row="1" Grid.ColumnSpan="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel x:Name="StackShifr" Margin="0" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" MaxHeight="25">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="#FFFFE2E2" Opacity="0"/>
+                        </StackPanel.Background>
+                        <Label x:Name="F" Content="{Binding Path=Familiya}" />
+                        <Label x:Name="I" Content="{Binding Path=Imya}" />
+                        <Label x:Name="O" Content="{Binding Path=Otchestvo}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu x:Name="AuthorMenu">
+                    <MenuItem x:Name="UnselectAuthor" Header="Сбросить выделение" Click="UnselectAuthor_Click"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        <Label Content="Авторы" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="FIOText" Margin="5,2" Text="ФИО" FontSize="16" Background="White" Padding="5,0" Grid.Row="2" VerticalContentAlignment="Center" Grid.ColumnSpan="2" />
+        <Button IsEnabled="{Binding Path=CanUpdate}" x:Name="AuthorAdd" Content="Добавить" Margin="5,2" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10,0" Click="AuthorAdd_Click" Focusable="False" Grid.Row="3"/>
+        <Button IsEnabled="{Binding Path=CanInsert}" x:Name="DelAuthor" Content="Удалить" Margin="5,2" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10,0" Click="DelAuthor_Click" Focusable="False" Grid.Row="3" Grid.Column="1" />
+
+        <ListBox x:Name="IndexList" Margin="5,0" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="2" SelectionChanged="IndexList_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel x:Name="StackShifr" Margin="0" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" MaxHeight="25">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="#FFFFE2E2" Opacity="0"/>
+                        </StackPanel.Background>
+                        <Label x:Name="ID" Content="{Binding Path=Shifr}" />
+                        <Label x:Name="Descr" Content="{Binding Path=Description}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu x:Name="IndexMenu">
+                    <MenuItem x:Name="UnselectIndex" Header="Сбросить выделение" Click="UnselectIndex_Click"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        <Label Content="Индексы" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Column="2" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="IndexText" HorizontalAlignment="Left" Margin="5,2,0,2" Text="Индекс" FontSize="16" Grid.Column="2" Background="White" Padding="5,0" Grid.Row="2" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="IndexDescription" Grid.Column="2" HorizontalAlignment="Right" Margin="0,2,5,2" Text="Описание" FontSize="16" Background="White" Padding="5,0" Grid.Row="2" VerticalContentAlignment="Center" Width="139" Grid.ColumnSpan="2"/>
+        <Button IsEnabled="{Binding Path=CanUpdate}" x:Name="IndexAdd" Content="Добавить" Margin="5,2" Grid.Column="2" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10,0" Click="IndexAdd_Click" Focusable="False" Grid.Row="3"/>
+        <Button IsEnabled="{Binding Path=CanInsert}" x:Name="DelIndex" Content="Удалить" Margin="5,2" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10,0" Click="DelIndex_Click" Grid.Column="3" Focusable="False" Grid.Row="3" />
+
+        <ListBox x:Name="TypeList" Margin="5,0" Grid.Column="4" SelectionChanged="TypeList_SelectionChanged" Grid.Row="1" Grid.ColumnSpan="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel x:Name="StackShifr" Margin="0" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" MaxHeight="25">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="#FFFFE2E2" Opacity="0"/>
+                        </StackPanel.Background>
+                        <Label x:Name="ID" Content="{Binding Path=ID}" />
+                        <Label x:Name="Descr" Content="{Binding Path=Description}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu x:Name="TypeMenu">
+                    <MenuItem x:Name="UnselectType" Header="Сбросить выделение" Click="UnselectType_Click"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        <Label Content="Тип доступа" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Column="4" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="TypeText" Margin="5,2" Text="Тип" FontSize="16" Grid.Column="4" Background="White" Padding="5,0" Grid.Row="2" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
+        <Button IsEnabled="{Binding Path=CanUpdate}" x:Name="TypeAdd" Content="Добавить" Margin="5,2" Grid.Column="4" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10,0" Click="TypeAdd_Click" Focusable="False" Grid.Row="3"/>
+        <Button IsEnabled="{Binding Path=CanInsert}" x:Name="DelType" Content="Удалить" Margin="5,2" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10,0" Click="DelType_Click" Grid.Column="5" Focusable="False" Grid.Row="3" />
+        <Label Content="Папка" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Row="4"/>
+        <ListBox x:Name="FolderList" Margin="5,0" SelectionChanged="FolderList_SelectionChanged" Grid.Row="5" Grid.ColumnSpan="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel x:Name="StackShifr" Margin="0" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" MaxHeight="25">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="#FFFFE2E2" Opacity="0"/>
+                        </StackPanel.Background>
+                        <Label x:Name="ID" Content="{Binding Path=ID}" />
+                        <Label x:Name="Descr" Content="{Binding Path=Description}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu x:Name="TypeMenu1">
+                    <MenuItem x:Name="UnselectType1" Header="Сбросить выделение" Click="UnselectType1_Click"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        <TextBox x:Name="FolderText" Margin="5,2" Text="Название" FontSize="16" Background="White" Padding="5,0" Grid.Row="6" VerticalContentAlignment="Center" Grid.ColumnSpan="2"/>
+        <Button IsEnabled="{Binding Path=CanUpdate}" x:Name="FolderAdd" Content="Добавить" Margin="5,2" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10,0" Click="FolderAdd_Click" Focusable="False" Grid.Row="7"/>
+        <Button IsEnabled="{Binding Path=CanInsert}" x:Name="DelFolder" Content="Удалить" Margin="5,2" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10,0" Click="DelFolder_Click" Grid.Column="1" Focusable="False" Grid.Row="7" />
+        <Label Content="Источник" HorizontalAlignment="Left" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="2"/>
+        <ListBox x:Name="SourseList" Margin="5,0" SelectionChanged="SourseList_SelectionChanged" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel x:Name="StackShifr" Margin="0" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" MaxHeight="25">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="#FFFFE2E2" Opacity="0"/>
+                        </StackPanel.Background>
+                        <Label x:Name="ID" Content="{Binding Path=ID}" />
+                        <Label x:Name="Descr" Content="{Binding Path=Description}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu x:Name="TypeMenu2">
+                    <MenuItem x:Name="UnselectType2" Header="Сбросить выделение" Click="UnselectType1_Click"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        <TextBox x:Name="SourseText" Margin="5,2" Text="Название" FontSize="16" Background="White" Padding="5,0" Grid.Row="6" VerticalContentAlignment="Center" Grid.ColumnSpan="2" Grid.Column="2"/>
+        <Button IsEnabled="{Binding Path=CanUpdate}" x:Name="SourseAdd" Content="Добавить" Margin="5,2" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10,0" Click="SourseAdd_Click" Focusable="False" Grid.Row="7" Grid.Column="2"/>
+        <Button IsEnabled="{Binding Path=CanInsert}" x:Name="DelSourse" Content="Удалить" Margin="5,2" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="10,0" Grid.Column="3" Focusable="False" Grid.Row="7" Click="DelSourse_Click" />
+
+    </Grid>
+</Window>

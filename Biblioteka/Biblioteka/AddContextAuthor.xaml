@@ -1,0 +1,38 @@
+﻿<Window x:Name="AddContextAuthor1" x:Class="Biblioteka.AddContextAuthor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Biblioteka"
+        mc:Ignorable="d"
+        Title="AddContextAuthor" Height="323" Width="300" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False" WindowStyle="None" Topmost="True">
+    <Grid Background="#FFDCF0DC">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="AuthorList" Margin="10" Grid.ColumnSpan="2">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel x:Name="StackShifr" Margin="0" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" MaxHeight="25">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="#FFFFE2E2" Opacity="0"/>
+                        </StackPanel.Background>
+                        <Label x:Name="F" Content="{Binding Path=Familiya}" />
+                        <Label x:Name="I" Content="{Binding Path=Imya}" />
+                        <Label x:Name="O" Content="{Binding Path=Otchestvo}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBox x:Name="AuthorText" Margin="10,2,11,2" Text="ФИО" Grid.ColumnSpan="2" FontSize="16" Grid.Row="1" TextChanged="AuthorText_TextChanged"/>
+        <Button x:Name="ButtonAdd" Content="Добавить" Margin="10,1,10,5" FontSize="16" Grid.Row="2" Click="ButtonAdd_Click"/>
+        <Button x:Name="ButtonCancel" Content="Отмена" Margin="10,1,10,5" Grid.Column="1" FontSize="16" Grid.Row="2" Click="ButtonCancel_Click"/>
+
+    </Grid>
+</Window>

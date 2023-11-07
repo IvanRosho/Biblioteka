@@ -1,0 +1,99 @@
+﻿<Window x:Class="Biblioteka.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Biblioteka"
+        mc:Ignorable="d"
+        Title="Библиотека карточек" Height="600" Width="800" MinWidth="800" MinHeight="600" Closing="Window_Closing">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid Background="#FFACACAC">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="21"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Menu Height="21" VerticalAlignment="Top" Grid.ColumnSpan="4" FontSize="14">
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <LinearGradientBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                            <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                            <RotateTransform Angle="-90" CenterY="0.5" CenterX="0.5"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#7FFF0000" Offset="1"/>
+                    <GradientStop Color="#7F00FF00"/>
+                </LinearGradientBrush>
+            </Menu.Background>
+            <MenuItem x:Name="MenuFile" Header="Файл" Height="Auto" Width="Auto">
+                <MenuItem x:Name="MenuFileOpen" Header="Открыть" HorizontalAlignment="Left" Height="Auto" Width="150" Click="MenuFileOpen_Click"/>
+                <MenuItem x:Name="MenuFileExit" Header="Выход" HorizontalAlignment="Left" Height="Auto" Width="150"/>
+            </MenuItem>
+            <MenuItem x:Name="MenuConfig" Header="Конфигурация" Height="Auto" Width="Auto">
+                <MenuItem x:Name="MenuConfigConf" Header="Настройки" HorizontalAlignment="Left" Height="Auto" Width="200" Click="MenuConfigConf_Click"/>
+                <MenuItem x:Name="MenuConfigAddAuthor" Header="Изменить авторов, шифры, типы доступа" HorizontalAlignment="Left" Height="Auto" Width="350" Click="MenuConfigAddAuthor_Click"/>
+                <MenuItem x:Name="MenuConfigAddCard" Header="Добавить карточку" IsEnabled="{Binding Path=CanInsert}" HorizontalAlignment="Left" Height="Auto" Width="350" Click="MenuConfigAddCard_Click"/>
+                <MenuItem x:Name="MenuConfigImport" Header="Импорт карточек" IsEnabled="{Binding Path=CanInsert}" HorizontalAlignment="Left" Height="Auto" Width="350" Click="MenuConfigImport_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="RateUs" Header="Оцените нас" Height="Auto" Width="Auto" Click="RateUs_Click"/>
+            <MenuItem x:Name="MenuHelp" Header="Справка" Height="Auto" Width="Auto">
+                <MenuItem x:Name="MenuHelpAbout" Header="О Программе" HorizontalAlignment="Left" Height="Auto" Width="175"/>
+            </MenuItem>
+        </Menu>
+        <ListBox x:Name="CardPanel" Grid.Row="1" Margin="5" IsEnabled="{Binding SelectedItem, ElementName=ShifrPanel}" MouseDoubleClick="CardPanel_MouseDoubleClick" Grid.ColumnSpan="3" Grid.RowSpan="2" Background="#7FF6FF43">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel x:Name="WrapCards" Margin="0"  Background="#FFD4FFDC" Height="Auto">
+                        <Image Height="25" Margin="5,0" Source="Card.bmp"/>
+                        <Label Content="{Binding Path=Shifr}" Margin="5,0" VerticalContentAlignment="Center" FontSize="16" Background="#FFC1F9FF" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=RSH, Mode=OneWay}" />
+                        <Label Content="{Binding Path=Name}" Margin="5,0" VerticalContentAlignment="Center" FontSize="16" />
+                    </WrapPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem IsEnabled="{Binding Path=CanInsert}" Header="Удалить" Click="MenuItem_Click"></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+        </ListBox>
+        <ListBox x:Name="ShifrPanel" Grid.Column="3" Margin="5" Padding="0" Grid.Row="2" Grid.RowSpan="2" Background="#FFD3D5FF" ItemsSource="{Binding Path=Shifr}" Foreground="Black" SelectionChanged="ShifrPanel_SelectionChanged" FontSize="14" IsSynchronizedWithCurrentItem="False">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel x:Name="StackShifr" Margin="0"  Background="White" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                        <Label x:Name="ID" Content="{Binding Path=Shifr}" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=RSH, Mode=OneWay}"/>
+                        <Label x:Name="Descr" Content="{Binding Path=Description}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Поиск:" HorizontalAlignment="Left" Margin="0" Grid.Row="3" FontSize="20"/>
+        <TextBox x:Name="SearchText" Margin="0,2" Grid.Row="3" TextWrapping="Wrap" Text="..." VerticalContentAlignment="Center" FontSize="20" Grid.Column="1">
+            <TextBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="SolidWord" Header="Текст целиком" Click="SolidWord_Click" />
+                    <MenuItem x:Name="NameSearch" Header="Искать в названии" IsChecked="True" Click="NameSearch_Click"/>
+                    <MenuItem x:Name="DescrSearch" Header="Искать в содержании" IsChecked="True" Click="DescrSearch_Click" />
+                    <MenuItem x:Name="SourseSearch" Header="Искать в источниках" IsChecked="True" Click="SourseSearch_Click"/>
+                    <MenuItem x:Name="TagSearch" Header="Искать в тэгах" Click="TagSearch_Click"/>
+                    <MenuItem x:Name="AuthorSearch" Header="Искать карточки автора" Click="AuthorSearch_Click"/>
+                </ContextMenu>
+            </TextBox.ContextMenu>
+
+        </TextBox>
+        <Button Content="Искать!" Margin="5,2" Grid.Row="3" FontSize="20" Padding="10,1" Grid.Column="2" Click="Button_Click" Focusable="False"/>
+        <RadioButton x:Name="RSH" Content="Шифры" Grid.Column="3" HorizontalAlignment="Right" Margin="0,0,5,0" Grid.Row="1" VerticalContentAlignment="Center" FontSize="16" Click="RF_Click"/>
+        <RadioButton x:Name="RF" Content="Папки" Grid.Column="3" HorizontalAlignment="Left" Margin="10,0,5,0" Grid.Row="1" IsChecked="True" VerticalContentAlignment="Center" FontSize="16" Click="RF_Click"/>
+    </Grid>
+</Window>
